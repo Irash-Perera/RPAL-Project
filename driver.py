@@ -1,7 +1,9 @@
 from Parser.parser_1 import Parser
 from Lexer.lexical_analyzer import tokenize
 from Standerizer.ast_factory import ASTFactory
-import inspect
+from CSEM.csemachine import CSEMachine
+from CSEM.cse_factory import CSEMachineFactory
+# import inspect
 
 
 def main():
@@ -48,10 +50,16 @@ def main():
         ast = ast_factory.get_abstract_syntax_tree(string_ast)
         ast.standardize()
         ast.print_ast()
+        
+        print('\n')
+        
+        cse_machine_factory = CSEMachineFactory()
+        cse_machine = cse_machine_factory.get_cse_machine(ast)
+        print('Output of the program: ', cse_machine.get_answer())
 
 
     except Exception as e:
-        print(str(e))
+        print(e)
 
 if __name__ == "__main__":
     main()

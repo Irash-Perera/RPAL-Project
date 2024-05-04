@@ -15,6 +15,9 @@ class Node:
 
     def get_degree(self):
         return len(self.children)
+    
+    def get_children(self):
+        return self.children
 
     def set_depth(self, depth):
         self.depth = depth
