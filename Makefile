@@ -1,17 +1,18 @@
 PYTHON := python
-FILES := run_parser.py lexical_analyzer.py parser_1.py
+FILES := ast_driver.py std_ast_driver.py output_driver.py
 PYFILES := $(wildcard *.py)
 
-# Default target
 all: $(PYFILES)
 
+run_ast: $(FILES)
+	$(PYTHON) ast_driver.py -ast
 
-# Target to run the 'run_parser.py' script
-run: $(FILES)
+run_std_ast: $(FILES)
+	$(PYTHON) std_ast_driver.py -std
 
-	$(PYTHON) run_parser.py
+run_output: $(FILES)
+	$(PYTHON) output_driver.py
 
-# Clean target
 clean:
 	rm -rf __pycache__ *.pyc
 
