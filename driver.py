@@ -1,5 +1,5 @@
-from parser_1 import Parser
-from lexical_analyzer import tokenize
+from Parser.parser_1 import Parser
+from Lexer.lexical_analyzer import tokenize
 from Standerizer.ast_factory import ASTFactory
 import inspect
 
