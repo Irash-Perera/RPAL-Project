@@ -1,5 +1,8 @@
-from AST_node_type import ASTNodeType
-from AST_node import ASTNode, StandardizeException
+from Standarizing_AST.AST_node_type import ASTNodeType
+from Standarizing_AST.AST_node import ASTNode, StandardizeException
+from CSE_Machine.delta import Delta
+from CSE_Machine.beta import Beta
+
 
 class AST:
     def __init__(self, node):
@@ -253,7 +256,7 @@ class AST:
 
     def create_delta(self, start_body_node):
         # Create delta's body later
-        pending_delta = PendingDeltaBody()
+        pending_delta = self.PendingDeltaBody()
         pending_delta.start_node = start_body_node
         pending_delta.body = []
         self.pending_delta_body_queue.append(pending_delta)
@@ -311,6 +314,11 @@ class AST:
         while child_node:
             self.build_delta_body(child_node, body)
             child_node = child_node.get_sibling()
-
+    
+    class PendingDeltaBody:
+        def __init__(self):
+            self.body = []
+            self.start_node = None
+            
     def is_standardized(self):
         return self.standardized

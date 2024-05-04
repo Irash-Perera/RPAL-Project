@@ -1,16 +1,7 @@
-import sys
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
-
-project_dir = os.getenv("PROJECT_DIR")
-
-
-sys.path.append(project_dir)
-
 from parser_1 import Parser
 from lexical_analyzer import tokenize
+from Standarizing_AST.standarize_AST import AST
+
 
 
 def main():
@@ -26,10 +17,17 @@ def main():
         if ast is None:
             return
 
-
         # Print the generated AST
         # for node in ast:
         #     print(node)
+        print(ast)
+
+        # Standardize the AST
+        root_node = ast[0]  # Choose the first node as the root node
+        ast_instance = AST(root_node)
+        ast_instance.standardize()
+        ast_instance.print()
+    
 
         string_ast = parser.convert_ast_to_string_ast()
         for string in string_ast:
