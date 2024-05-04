@@ -1,5 +1,5 @@
 class AST:
-    def __init__(self, root):
+    def __init__(self, root = None):
         self.root = root
 
     def set_root(self, root):

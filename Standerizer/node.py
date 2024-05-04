@@ -1,4 +1,3 @@
-from Standerizer.node_factory import NodeFactory
 
 class Node:
     def __init__(self):
@@ -53,7 +52,7 @@ class Node:
                 self.standardize()
             elif self.data == "function_form":
                 Ex = self.children[-1]
-                current_lambda = NodeFactory.get_node("lambda", self.depth + 1, self, [], True)
+                current_lambda = NodeFactory.get_node_with_parent("lambda", self.depth + 1, self, [], True)
                 self.children.insert(1, current_lambda)
 
                 i = 2
@@ -65,7 +64,7 @@ class Node:
                     current_lambda.children.append(V)
 
                     if len(self.children) > 3:
-                        current_lambda = NodeFactory.get_node("lambda", current_lambda.depth + 1, current_lambda, [], True)
+                        current_lambda = NodeFactory.get_node_with_parent("lambda", current_lambda.depth + 1, current_lambda, [], True)
                         current_lambda.get_parent().children.append(current_lambda)
 
                 current_lambda.children.append(Ex)
@@ -74,7 +73,7 @@ class Node:
             elif self.data == "lambda":
                 if len(self.children) > 2:
                     Ey = self.children[-1]
-                    current_lambda = NodeFactory.get_node("lambda", self.depth + 1, self, [], True)
+                    current_lambda = NodeFactory.get_node_with_parent("lambda", self.depth + 1, self, [], True)
                     self.children.insert(1, current_lambda)
 
                     i = 2
@@ -86,7 +85,7 @@ class Node:
                         current_lambda.children.append(V)
 
                         if len(self.children) > 3:
-                            current_lambda = NodeFactory.get_node("lambda", current_lambda.depth + 1, current_lambda, [], True)
+                            current_lambda = NodeFactory.get_node_with_parent("lambda", current_lambda.depth + 1, current_lambda, [], True)
                             current_lambda.get_parent().children.append(current_lambda)
 
                     current_lambda.children.append(Ey)
@@ -96,8 +95,8 @@ class Node:
                 X2 = self.children[1].children[0]
                 E1 = self.children[0].children[1]
                 E2 = self.children[1].children[1]
-                gamma = NodeFactory.get_node("gamma", self.depth + 1, self, [], True)
-                lambda_ = NodeFactory.get_node("lambda", self.depth + 2, gamma, [], True)
+                gamma = NodeFactory.get_node_with_parent("gamma", self.depth + 1, self, [], True)
+                lambda_ = NodeFactory.get_node_with_parent("lambda", self.depth + 2, gamma, [], True)
                 X1.set_depth(X1.get_depth() + 1)
                 X1.set_parent(lambda_)
                 X2.set_depth(X1.get_depth() - 1)
@@ -115,7 +114,7 @@ class Node:
                 self.children.append(gamma)
                 self.set_data("=")
             elif self.data == "@":
-                gamma1 = NodeFactory.get_node("gamma", self.depth + 1, self, [], True)
+                gamma1 = NodeFactory.get_node_with_parent("gamma", self.depth + 1, self, [], True)
                 e1 = self.children[0]
                 e1.set_depth(e1.get_depth() + 1)
                 e1.set_parent(gamma1)
@@ -129,8 +128,8 @@ class Node:
                 self.children.insert(0, gamma1)
                 self.set_data("gamma")
             elif self.data == "and":
-                comma = NodeFactory.get_node(",", self.depth + 1, self, [], True)
-                tau = NodeFactory.get_node("tau", self.depth + 1, self, [], True)
+                comma = NodeFactory.get_node_with_parent(",", self.depth + 1, self, [], True)
+                tau = NodeFactory.get_node_with_parent("tau", self.depth + 1, self, [], True)
 
                 for equal in self.children:
                     equal.children[0].set_parent(comma)
@@ -145,10 +144,10 @@ class Node:
             elif self.data == "rec":
                 X = self.children[0].children[0]
                 E = self.children[0].children[1]
-                F = NodeFactory.get_node(X.get_data(), self.depth + 1, self, X.children, True)
-                G = NodeFactory.get_node("gamma", self.depth + 1, self, [], True)
-                Y = NodeFactory.get_node("<Y*>", self.depth + 2, G, [], True)
-                L = NodeFactory.get_node("lambda", self.depth + 2, G, [], True)
+                F = NodeFactory.get_node_with_parent(X.get_data(), self.depth + 1, self, X.children, True)
+                G = NodeFactory.get_node_with_parent("gamma", self.depth + 1, self, [], True)
+                Y = NodeFactory.get_node_with_parent("<Y*>", self.depth + 2, G, [], True)
+                L = NodeFactory.get_node_with_parent("lambda", self.depth + 2, G, [], True)
 
                 X.set_depth(L.depth + 1)
                 X.set_parent(L)
@@ -164,3 +163,25 @@ class Node:
                 self.set_data("=")
 
             self.is_standardized = True
+
+class NodeFactory:
+    def __init__(self):
+        pass
+
+    @staticmethod
+    def get_node(data, depth):
+        node = Node()
+        node.set_data(data)
+        node.set_depth(depth)
+        node.children = []
+        return node
+
+    @staticmethod
+    def get_node_with_parent(data, depth, parent, children, is_standardized):
+        node = Node()
+        node.set_data(data)
+        node.set_depth(depth)
+        node.set_parent(parent)
+        node.children = children
+        node.is_standardized = is_standardized
+        return node

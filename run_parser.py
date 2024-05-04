@@ -1,7 +1,8 @@
 from parser_1 import Parser
 from lexical_analyzer import tokenize
-from Standerizer.ast import AST
-from Standerizer.node import Node
+from Standerizer.ast_factory import ASTFactory
+import inspect
+
 
 def main():
     input_file = open("input.txt", "r")
@@ -12,32 +13,42 @@ def main():
 
     try:
         parser = Parser(tokens)
-        ast = parser.parse()
-        if ast is None:
+        ast_nodes = parser.parse()
+        if ast_nodes is None:
             return
 
 
         # Print the generated AST
         # for node in ast:
         #     print(node)
-        
-        
+    
         
         # Create an AST object with the root node
-        ast[0] = Node()
-        ast_obj = AST(ast[0])
-
-        # Standardize the AST
-        ast_obj.standardize()
-
-        # Print the standardized AST
-        ast_obj.print_ast()
+        # ast = AST(ast[0])
+        # # Standardize the AST
+        # ast.standardize()
+        # ast.print_ast()
         
-        
-
+        print('''
+              ========================================================
+              |            Abstract Syntax Tree                      |
+              ========================================================
+              ''')
+   
         string_ast = parser.convert_ast_to_string_ast()
         for string in string_ast:
             print(string)
+            
+        print('''\n
+              ========================================================
+              |            Standardized Abstract Syntax Tree         |
+              ========================================================
+              ''')
+        ast_factory = ASTFactory()
+        ast = ast_factory.get_abstract_syntax_tree(string_ast)
+        ast.standardize()
+        ast.print_ast()
+
 
     except Exception as e:
         print(str(e))

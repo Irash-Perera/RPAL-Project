@@ -1,5 +1,5 @@
-from node_factory import NodeFactory
-from ast import AST
+from Standerizer.node import NodeFactory
+from .ast import AST
 
 class ASTFactory:
     def __init__(self):
