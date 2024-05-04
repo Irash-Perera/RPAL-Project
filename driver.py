@@ -1,6 +1,8 @@
 from parser_1 import Parser
 from lexical_analyzer import tokenize
 from Standarizing_AST.standarize_AST import AST
+from Standarizing_AST.AST_node import ASTNode
+from Standarizing_AST.AST_node_type import ASTNodeType
 
 
 
@@ -15,23 +17,30 @@ def main():
         parser = Parser(tokens)
         ast = parser.parse()
         if ast is None:
+            print("Failed to generate AST. Parsing process returned None.")
             return
 
         # Print the generated AST
         # for node in ast:
         #     print(node)
-        print(ast)
-
         # Standardize the AST
-        root_node = ast[0]  # Choose the first node as the root node
-        ast_instance = AST(root_node)
-        ast_instance.standardize()
-        ast_instance.print()
-    
+        
+        
+        
+        ast_standardizer = AST(ast)
+        ast_standardizer.standardize()
 
-        string_ast = parser.convert_ast_to_string_ast()
-        for string in string_ast:
-            print(string)
+        # Print the standardized AST
+        print("Standardized AST:")
+        ast_standardizer.print()
+
+        
+        
+
+
+        # string_ast = parser.convert_ast_to_string_ast()
+        # for string in string_ast:
+        #     print(string)
 
     except Exception as e:
         print(str(e))
