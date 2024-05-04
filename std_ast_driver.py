@@ -31,31 +31,31 @@ def main():
         # ast.standardize()
         # ast.print_ast()
         
-        print('''
-              ========================================================
-              |            Abstract Syntax Tree                      |
-              ========================================================
-              ''')
+        
+              #========================================================
+              #|            Abstract Syntax Tree                      |
+              #========================================================
+              
    
         string_ast = parser.convert_ast_to_string_ast()
-        for string in string_ast:
-            print(string)
+        # for string in string_ast:
+        #     print(string)
             
-        print('''\n
-              ========================================================
-              |            Standardized Abstract Syntax Tree         |
-              ========================================================
-              ''')
+        
+              #========================================================
+              #|            Standardized Abstract Syntax Tree         |
+              #========================================================
+              
         ast_factory = ASTFactory()
         ast = ast_factory.get_abstract_syntax_tree(string_ast)
         ast.standardize()
         ast.print_ast()
         
-        print('\n')
+        # print('\n')
         
-        cse_machine_factory = CSEMachineFactory()
-        cse_machine = cse_machine_factory.get_cse_machine(ast)
-        print('Output of the program: ', cse_machine.get_answer())
+        # cse_machine_factory = CSEMachineFactory()
+        # cse_machine = cse_machine_factory.get_cse_machine(ast)
+        # print('Output of the program: ', cse_machine.get_answer())
 
 
     except Exception as e:

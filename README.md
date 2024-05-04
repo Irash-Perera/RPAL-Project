@@ -12,13 +12,3 @@ Before running the `run_parser.py` script, please follow these setup instruction
 
 2. Install Python (if not already installed). You can download Python from [here](https://www.python.org/downloads/).
 
-3. Install the required dependencies. Run the following command in your terminal:
-
-   ```
-   pip install -r requirements.txt
-   ```
-
-4. Set the project directory path:
-   - Open the `.env` file located in the project directory.
-   - Set the `PROJECT_DIR` variable to the absolute path of the project directory where `run_parser.py` is located.
-   - Save the `.env` file.
