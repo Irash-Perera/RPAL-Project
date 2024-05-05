@@ -154,7 +154,8 @@ class Lambda(Symbol):
 
     def get_delta(self):
         return self.delta
-
+    def get_index(self):
+        return self.index
 
 class Str(Rand):
     def __init__(self, data):

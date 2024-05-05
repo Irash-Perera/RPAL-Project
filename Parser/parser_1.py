@@ -421,6 +421,7 @@ class Parser:
             else:
                 print("Parsing error at Rn: Unexpected PUNCTUATION")
         else:
+            print(token_type, token_value)
             print("Parsing error at Rn: Expected a Rn, but got different")
 
     # Definitions

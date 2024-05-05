@@ -31,10 +31,10 @@ def tokenize(input_str):
     keywords = {
         'COMMENT': r'//.*',
         'KEYWORD': r'(let|in|fn|where|aug|or|not|gr|ge|ls|le|eq|ne|true|false|nil|dummy|within|and|rec)\b',
+        'STRING': r'\'(?:\\\'|[^\'])*\'',
         'IDENTIFIER': r'[a-zA-Z][a-zA-Z0-9_]*',
         'INTEGER': r'\d+',
         'OPERATOR': r'[+\-*<>&.@/:=~|$\#!%^_\[\]{}"\'?]+',
-        'STRING': r'\'\'\'(?:\\t|\\n|\\\'|\\\'\'|[\(\);,\'a-zA-Z0-9+\-*<>&.@/:=~|$\#!%^_\[\]{}"\'?\s])+\'\'\'',
         'SPACES': r'[ \t\n]+',
         'PUNCTUATION': r'[();,]'
     }

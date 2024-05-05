@@ -6,6 +6,8 @@ class CSEMachine:
         self.stack = stack
         self.environment = environment
 
+    
+
     def execute(self):
         current_environment = self.environment[0]
         j = 1
@@ -120,18 +122,20 @@ class CSEMachine:
             else:
                 self.stack.insert(0, current_symbol)
 
-    def print_control(self):
-        print("Control: ", end="")
-        for symbol in self.control:
+    
+
+    def print_stack(self):
+        print("Stack: ", end="")
+        for symbol in self.stack:
             print(symbol.get_data(), end="")
             if isinstance(symbol, (Lambda, Delta, E, Eta)):
                 print(symbol.get_index(), end="")
             print(",", end="")
         print()
-
-    def print_stack(self):
-        print("Stack: ", end="")
-        for symbol in self.stack:
+    
+    def print_control(self):
+        print("Control: ", end="")
+        for symbol in self.control:
             print(symbol.get_data(), end="")
             if isinstance(symbol, (Lambda, Delta, E, Eta)):
                 print(symbol.get_index(), end="")
