@@ -80,7 +80,43 @@ class CSEMachine:
                         else:
                             self.stack.insert(0, Bool("false"))
                         self.stack.pop(1)
-                    # Implement other built-in functions similarly
+                    elif next_symbol.get_data() == "Null":
+                        # implement Null function
+                        pass
+                    elif next_symbol.get_data() == "Itos":
+                        # implement Itos function
+                        pass
+                    elif next_symbol.get_data() == "Isstring":
+                        if isinstance(self.stack[0], Str):
+                            self.stack.insert(0, Bool("true"))
+                        else:
+                            self.stack.insert(0, Bool("false"))
+                        self.stack.pop(1)
+                    elif next_symbol.get_data() == "Istuple":
+                        if isinstance(self.stack[0], Tup):
+                            self.stack.insert(0, Bool("true"))
+                        else:
+                            self.stack.insert(0, Bool("false"))
+                        self.stack.pop(1)
+                    elif next_symbol.get_data() == "Isdummy":
+                        if isinstance(self.stack[0], Dummy):
+                            self.stack.insert(0, Bool("true"))
+                        else:
+                            self.stack.insert(0, Bool("false"))
+                        self.stack.pop(1)
+                    elif next_symbol.get_data() == "Istruthvalue":
+                        if isinstance(self.stack[0], Bool):
+                            self.stack.insert(0, Bool("true"))
+                        else:
+                            self.stack.insert(0, Bool("false"))
+                        self.stack.pop(1)
+                    elif next_symbol.get_data() == "Isfunction":
+                        if isinstance(self.stack[0], Lambda):
+                            self.stack.insert(0, Bool("true"))
+                        else:
+                            self.stack.insert(0, Bool("false"))
+                        self.stack.pop(1)
+
             elif isinstance(current_symbol, E):
                 self.stack.pop(1)
                 self.environment[current_symbol.get_index()].set_is_removed(True)
