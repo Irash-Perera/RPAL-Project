@@ -10,33 +10,33 @@ class CSEMachineFactory:
     def get_symbol(self, node):
         data = node.get_data()
         if data in ("not", "neg"):
-            return Uop(data)
+            return Uop(data)  # Unary operator symbol
         elif data in ("+", "-", "*", "/", "**", "&", "or", "eq", "ne", "ls", "le", "gr", "ge", "aug"):
-            return Bop(data)
+            return Bop(data)  # Binary operator symbol
         elif data == "gamma":
-            return Gamma()
+            return Gamma()  # Gamma symbol
         elif data == "tau":
-            return Tau(len(node.get_children()))
+            return Tau(len(node.get_children()))  # Tau symbol with the number of children
         elif data == "<Y*>":
-            return Ystar()
+            return Ystar()  # Y* symbol
         else:
             if data.startswith("<IDENTIFIER:"):
-                return Id(data[12:-1])
+                return Id(data[12:-1])  # Identifier symbol
             elif data.startswith("<INTEGER:"):
-                return Int(data[9:-1])
+                return Int(data[9:-1])  # Integer symbol
             elif data.startswith("<STRING:"):
-                return Str(data[9:-2])
+                return Str(data[9:-2])  # String symbol
             elif data.startswith("<nil"):
-                return Tup()
+                return Tup()  # Tuple symbol
             elif data.startswith("<true>"):
-                return Bool("true")
+                return Bool("true")  # Boolean true symbol
             elif data.startswith("<false>"):
-                return Bool("false")
+                return Bool("false")  # Boolean false symbol
             elif data.startswith("<dummy>"):
-                return Dummy()
+                return Dummy()  # Dummy symbol
             else:
                 print("Err node:", data)
-                return Err()
+                return Err()  # Error symbol
 
     def get_b(self, node):
         b = B()
@@ -57,12 +57,12 @@ class CSEMachineFactory:
     def get_pre_order_traverse(self, node):
         symbols = []
         if node.get_data() == "lambda":
-            symbols.append(self.get_lambda(node))
+            symbols.append(self.get_lambda(node))  # Lambda expression symbol
         elif node.get_data() == "->":
-            symbols.append(self.get_delta(node.get_children()[1]))
-            symbols.append(self.get_delta(node.get_children()[2]))
-            symbols.append(Beta())
-            symbols.append(self.get_b(node.get_children()[0]))
+            symbols.append(self.get_delta(node.get_children()[1]))  # Delta symbol
+            symbols.append(self.get_delta(node.get_children()[2]))  # Delta symbol
+            symbols.append(Beta())  # Beta symbol
+            symbols.append(self.get_b(node.get_children()[0]))  # B symbol
         else:
             symbols.append(self.get_symbol(node))
             for child in node.get_children():
