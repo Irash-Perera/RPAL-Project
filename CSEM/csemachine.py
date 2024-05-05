@@ -9,6 +9,7 @@ class CSEMachine:
     
 
     def execute(self):
+        # Execute the CSEMachine
         current_environment = self.environment[0]
         j = 1
         while self.control:
@@ -21,6 +22,7 @@ class CSEMachine:
             elif isinstance(current_symbol, Gamma):
                 next_symbol = self.stack.pop(0)
                 if isinstance(next_symbol, Lambda):
+                    # Handle Lambda expression
                     lambda_expr = next_symbol
                     e = E(j)
                     if len(lambda_expr.identifiers) == 1:
@@ -38,10 +40,12 @@ class CSEMachine:
                     self.stack.insert(0, e)
                     self.environment.append(e)
                 elif isinstance(next_symbol, Tup):
+                    # Handle Tup expression
                     tup = next_symbol
                     i = int(self.stack.pop(0).get_data())
                     self.stack.insert(0, tup.symbols[i - 1])
                 elif isinstance(next_symbol, Ystar):
+                    # Handle Ystar expression
                     lambda_expr = self.stack.pop(0)
                     eta = Eta()
                     eta.set_index(lambda_expr.get_index())
@@ -50,6 +54,7 @@ class CSEMachine:
                     eta.set_lambda(lambda_expr)
                     self.stack.insert(0, eta)
                 elif isinstance(next_symbol, Eta):
+                    # Handle Eta expression
                     eta = next_symbol
                     lambda_expr = eta.get_lambda()
                     self.control.append(Gamma())
@@ -57,33 +62,81 @@ class CSEMachine:
                     self.stack.insert(0, eta)
                     self.stack.insert(0, lambda_expr)
                 else:
+                    # Handle other symbols
                     if next_symbol.get_data() == "Print":
                         pass
                     elif next_symbol.get_data() == "Stem":
+                        # implement Stem function
                         s = self.stack.pop(0)
                         s.set_data(s.get_data()[0])
                         self.stack.insert(0, s)
                     elif next_symbol.get_data() == "Stern":
+                        # implement Stern function
                         s = self.stack.pop(0)
                         s.set_data(s.get_data()[1:])
                         self.stack.insert(0, s)
                     elif next_symbol.get_data() == "Conc":
+                        # implement Conc function
                         s1 = self.stack.pop(0)
                         s2 = self.stack.pop(0)
                         s1.set_data(s1.get_data() + s2.get_data())
                         self.stack.insert(0, s1)
                     elif next_symbol.get_data() == "Order":
+                        # implement Order function
                         tup = self.stack.pop(0)
                         n = Int(str(len(tup.symbols)))
                         self.stack.insert(0, n)
                     elif next_symbol.get_data() == "Isinteger":
+                        # implement Isinteger function
                         if isinstance(self.stack[0], Int):
                             self.stack.insert(0, Bool("true"))
                         else:
                             self.stack.insert(0, Bool("false"))
                         self.stack.pop(1)
-                    # Implement other built-in functions similarly
+                    elif next_symbol.get_data() == "Null":
+                        # implement Null function
+                        pass
+                    elif next_symbol.get_data() == "Itos":
+                        # implement Itos function
+                        pass
+                    elif next_symbol.get_data() == "Isstring":
+                        # implement Isstring function
+                        if isinstance(self.stack[0], Str):
+                            self.stack.insert(0, Bool("true"))
+                        else:
+                            self.stack.insert(0, Bool("false"))
+                        self.stack.pop(1)
+                    elif next_symbol.get_data() == "Istuple":
+                        # implement Istuple function
+                        if isinstance(self.stack[0], Tup):
+                            self.stack.insert(0, Bool("true"))
+                        else:
+                            self.stack.insert(0, Bool("false"))
+                        self.stack.pop(1)
+                    elif next_symbol.get_data() == "Isdummy":
+                        # implement Isdummy function
+                        if isinstance(self.stack[0], Dummy):
+                            self.stack.insert(0, Bool("true"))
+                        else:
+                            self.stack.insert(0, Bool("false"))
+                        self.stack.pop(1)
+                    elif next_symbol.get_data() == "Istruthvalue":
+                        # implement Istruthvalue function
+                        if isinstance(self.stack[0], Bool):
+                            self.stack.insert(0, Bool("true"))
+                        else:
+                            self.stack.insert(0, Bool("false"))
+                        self.stack.pop(1)
+                    elif next_symbol.get_data() == "Isfunction":
+                        # implement Isfunction function
+                        if isinstance(self.stack[0], Lambda):
+                            self.stack.insert(0, Bool("true"))
+                        else:
+                            self.stack.insert(0, Bool("false"))
+                        self.stack.pop(1)
+
             elif isinstance(current_symbol, E):
+                # Handle E expression
                 self.stack.pop(1)
                 self.environment[current_symbol.get_index()].set_is_removed(True)
                 y = len(self.environment)
@@ -95,29 +148,35 @@ class CSEMachine:
                         y -= 1
             elif isinstance(current_symbol, Rator):
                 if isinstance(current_symbol, Uop):
+                    # Handle Unary operation
                     rator = current_symbol
                     rand = self.stack.pop(0)
                     self.stack.insert(0, self.apply_unary_operation(rator, rand))
                 if isinstance(current_symbol, Bop):
+                    # Handle Binary operation
                     rator = current_symbol
                     rand1 = self.stack.pop(0)
                     rand2 = self.stack.pop(0)
                     self.stack.insert(0, self.apply_binary_operation(rator, rand1, rand2))
             elif isinstance(current_symbol, Beta):
+                # Handle Beta expression
                 if bool(self.stack[0].get_data()):
                     self.control.pop()
                 else:
                     self.control.pop(-2)
                 self.stack.pop(0)
             elif isinstance(current_symbol, Tau):
+                # Handle Tau expression
                 tau = current_symbol
                 tup = Tup()
                 for _ in range(tau.get_n()):
                     tup.symbols.append(self.stack.pop(0))
                 self.stack.insert(0, tup)
             elif isinstance(current_symbol, Delta):
+                # Handle Delta expression
                 self.control.extend(current_symbol.symbols)
             elif isinstance(current_symbol, B):
+                # Handle B expression
                 self.control.extend(current_symbol.symbols)
             else:
                 self.stack.insert(0, current_symbol)
@@ -143,6 +202,7 @@ class CSEMachine:
         print()
 
     def print_environment(self):
+        # Print the environment symbols
         for symbol in self.environment:
             print(f"e{symbol.get_index()} --> ", end="")
             if symbol.get_index() != 0:
@@ -151,6 +211,7 @@ class CSEMachine:
                 print()
 
     def apply_unary_operation(self, rator, rand):
+        # Apply unary operation
         if rator.get_data() == "neg":
             val = int(rand.get_data())
             return Int(str(-1 * val))
@@ -161,6 +222,7 @@ class CSEMachine:
             return Err()
 
     def apply_binary_operation(self, rator, rand1, rand2):
+        # Apply binary operation
         if rator.get_data() == "+":
             val1 = int(rand1.get_data())
             val2 = int(rand2.get_data())
@@ -168,6 +230,7 @@ class CSEMachine:
         # Implement other binary operations similarly
 
     def get_tuple_value(self, tup):
+        # Get the value of a tuple
         temp = "("
         for symbol in tup.symbols:
             if isinstance(symbol, Tup):
@@ -178,6 +241,7 @@ class CSEMachine:
         return temp
 
     def get_answer(self):
+        # Get the answer from the CSEMachine
         self.execute()
         if isinstance(self.stack[0], Tup):
             return str(sum(int(symbol.get_data()) for symbol in self.stack[0].symbols))

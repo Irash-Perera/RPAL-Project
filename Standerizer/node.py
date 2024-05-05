@@ -37,6 +37,13 @@ class Node:
                 child.standardize()
 
             if self.data == "let":
+                # Standardize LET node
+                #       LET              GAMMA
+                #     /     \           /     \
+                #    EQUAL   P   ->   LAMBDA   E
+                #   /   \             /    \
+                #  X     E           X      P 
+                
                 temp1 = self.children[0].children[1]
                 temp1.set_parent(self)
                 temp1.set_depth(self.depth + 1)
@@ -48,12 +55,24 @@ class Node:
                 self.children[0].children[1] = temp2
                 self.set_data("gamma")
             elif self.data == "where":
+                #       WHERE               LET
+                #       /   \             /     \
+                #      P    EQUAL   ->  EQUAL   P
+                #           /   \       /   \
+                #          X     E     X     E
+                
                 temp = self.children[0]
                 self.children[0] = self.children[1]
                 self.children[1] = temp
                 self.set_data("let")
                 self.standardize()
             elif self.data == "function_form":
+                
+                #       FCN_FORM                EQUAL
+                #       /   |   \              /    \
+                #      P    V+   E    ->      P     +LAMBDA
+                #                                    /     \
+                #                                    V     .E
                 Ex = self.children[-1]
                 current_lambda = NodeFactory.get_node_with_parent("lambda", self.depth + 1, self, [], True)
                 self.children.insert(1, current_lambda)
@@ -74,6 +93,11 @@ class Node:
                 self.children.pop(2)
                 self.set_data("=")
             elif self.data == "lambda":
+                
+                #     LAMBDA        LAMBDA
+                #      /   \   ->   /    \
+                #     V++   E      V     .E
+                
                 if len(self.children) > 2:
                     Ey = self.children[-1]
                     current_lambda = NodeFactory.get_node_with_parent("lambda", self.depth + 1, self, [], True)
@@ -94,6 +118,15 @@ class Node:
                     current_lambda.children.append(Ey)
                     self.children.pop(2)
             elif self.data == "within":
+                
+                #           WITHIN                  EQUAL
+                #          /      \                /     \
+                #        EQUAL   EQUAL    ->      X2     GAMMA
+                #       /    \   /    \                  /    \
+                #      X1    E1 X2    E2               LAMBDA  E1
+                #                                      /    \
+                #                                     X1    E2
+                
                 X1 = self.children[0].children[0]
                 X2 = self.children[1].children[0]
                 E1 = self.children[0].children[1]
@@ -117,6 +150,13 @@ class Node:
                 self.children.append(gamma)
                 self.set_data("=")
             elif self.data == "@":
+                
+                #         AT              GAMMA
+                #       / | \    ->       /    \
+                #      E1 N E2          GAMMA   E2
+                #                       /    \
+                #                      N     E1
+                
                 gamma1 = NodeFactory.get_node_with_parent("gamma", self.depth + 1, self, [], True)
                 e1 = self.children[0]
                 e1.set_depth(e1.get_depth() + 1)
@@ -131,6 +171,13 @@ class Node:
                 self.children.insert(0, gamma1)
                 self.set_data("gamma")
             elif self.data == "and":
+                
+                #         SIMULTDEF            EQUAL
+                #             |               /     \
+                #           EQUAL++  ->     COMMA   TAU
+                #           /   \             |      |
+                #          X     E           X++    E++
+                
                 comma = NodeFactory.get_node_with_parent(",", self.depth + 1, self, [], True)
                 tau = NodeFactory.get_node_with_parent("tau", self.depth + 1, self, [], True)
 
@@ -145,6 +192,15 @@ class Node:
                 self.children.append(tau)
                 self.set_data("=")
             elif self.data == "rec":
+                
+                #        REC                 EQUAL
+                #         |                 /     \
+                #       EQUAL     ->       X     GAMMA
+                #      /     \                   /    \
+                #     X       E                YSTAR  LAMBDA
+                #                                     /     \
+                #                                     X      E
+                
                 X = self.children[0].children[0]
                 E = self.children[0].children[1]
                 F = NodeFactory.get_node_with_parent(X.get_data(), self.depth + 1, self, X.children, True)
