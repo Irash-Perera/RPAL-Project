@@ -89,7 +89,7 @@ class E(Symbol):
 
 class Err(Symbol):
     def __init__(self):
-        super().__init__("error")
+        super().__init__("")
 
 class Eta(Symbol):
     def __init__(self):
