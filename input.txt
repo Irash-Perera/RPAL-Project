@@ -4,7 +4,13 @@
 
 // This is a comment
 
-let Abs N =
-    N ls 0 -> 'Negative' | 'Positive'
-in
-Print ( Abs (515) )
+//let Abs N =
+//   N ls 0 -> 'Negative' | 'Positive'
+//in
+//Print ( Abs (-515) )
+
+let Find_greatest A B C =
+    (A gr B & A gr C) -> A
+    | (B gr C) -> B
+    | C
+in Print(Find_greatest 0 1 3)
