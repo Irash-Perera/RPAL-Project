@@ -16,7 +16,7 @@ This project includes the following components:
 
 ## Setup
 
-Before running the `run_parser.py` script, please follow these setup instructions:
+Before running the scripts, please follow these setup instructions:
 
 1. Clone this repository to your local machine.
 
@@ -31,6 +31,10 @@ The project consists of the following Python scripts:
 - `output_driver.py`: This script generates the output.
 
 ## Running the Scripts
+
+You can simply follow the instructions in "Instructions to run.txt".             
+
+OR,
 
 You can run the scripts using the provided Makefile. Here are the available commands:
 

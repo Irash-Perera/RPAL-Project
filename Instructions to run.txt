@@ -1,0 +1,16 @@
+This project has 3 major driver files in the root directory. :
+
+    1.ast_driver.py - Run this file to generate the AST for the given input file.
+    2.std_ast_driver.py - Run this file to generate the standard AST for the given input file.
+    3.output_driver.py - Run this file to generate the output for the given input file.
+
+Sample test files are provided in the "Test Files" folder.
+To run these programs, just copy the corresponding test and paste it in the "input.txt" file which is in the root directory.
+
+Just simple as that 😊😁
+
+📝 If you are facing any issues while running this, feel free to contact us.
+📧pererasaim.21@cse.mrt.ac.lk - Irash
+📧ganeshan.21@cse.mrt.ac.lk - Niroshan
+
+Alternatively, to run Makefile (execute via commandline), just go through the instructions in README.md file. 
