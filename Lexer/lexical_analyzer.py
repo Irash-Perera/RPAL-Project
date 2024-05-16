@@ -44,7 +44,7 @@ def tokenize(input_str):
         for key, pattern in keywords.items():
             match = re.match(pattern, input_str)
             if match:
-                print(key, match.group(0))
+                # print(key, match.group(0))
                 if key != 'SPACES':
                     if key == 'COMMENT':
                         comment = match.group(0)

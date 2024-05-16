@@ -13,14 +13,14 @@ class CSEMachine:
         current_environment = self.environment[0]
         j = 1
         while self.control:
-            self.print_control()
-            self.print_stack()
-            print('\n')
+            # self.print_control()
+            # self.print_stack()
+            # print('\n')
             # self.print_environment()
             current_symbol = self.control.pop()
             if isinstance(current_symbol, Id):
                 self.stack.insert(0, current_environment.lookup(current_symbol))
-                print(current_environment.lookup(current_symbol).get_data())
+                # print(current_environment.lookup(current_symbol).get_data())
             elif isinstance(current_symbol, Lambda):
                 current_symbol.set_environment(current_environment.get_index())
                 self.stack.insert(0, current_symbol)
