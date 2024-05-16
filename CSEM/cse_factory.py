@@ -49,9 +49,9 @@ class CSEMachineFactory:
         lambda_expr.set_delta(self.get_delta(node.get_children()[1]))
         if node.get_children()[0].get_data() == ",":
             for identifier in node.get_children()[0].get_children():
-                lambda_expr.identifiers.append(Id(identifier.get_data()[4:-1]))
+                lambda_expr.identifiers.append(Id(identifier.get_data()[12:-1]))
         else:
-            lambda_expr.identifiers.append(Id(node.get_children()[0].get_data()[4:-1]))
+            lambda_expr.identifiers.append(Id(node.get_children()[0].get_data()[12:-1]))
         return lambda_expr
 
     def get_pre_order_traverse(self, node):
