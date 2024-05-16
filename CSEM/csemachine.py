@@ -175,11 +175,14 @@ class CSEMachine:
                 # # self.control.pop(-2)
                 # self.print_control()
                 
-                if (self.stack[0].get_data() == "True"):
+                if (bool(self.stack[0].get_data())):
                     self.control.pop()
                 else:
                     self.control.pop(-2)
                 self.stack.pop(0)
+                
+                
+                
             elif isinstance(current_symbol, Tau):
                 # Handle Tau expression
                 tau = current_symbol
@@ -261,35 +264,35 @@ class CSEMachine:
         elif rator.data == "&":
             val1 = bool(rand1.data)
             val2 = bool(rand2.data)
-            return Bool(str(val1 and val2))
+            return Bool((val1 and val2))
         elif rator.data == "or":
             val1 = bool(rand1.data)
             val2 = bool(rand2.data)
-            return Bool(str(val1 or val2))
+            return Bool((val1 or val2))
         elif rator.data == "eq":
             val1 = rand1.data
             val2 = rand2.data
-            return Bool(str(val1 == val2))
+            return Bool((val1 == val2))
         elif rator.data == "ne":
             val1 = rand1.data
             val2 = rand2.data
-            return Bool(str(val1 != val2))
+            return Bool((val1 != val2))
         elif rator.data == "ls":
             val1 = int(rand1.data)
             val2 = int(rand2.data)
-            return Bool(str(val1 < val2))
+            return Bool((val1 < val2))
         elif rator.data == "le":
             val1 = int(rand1.data)
             val2 = int(rand2.data)
-            return Bool(str(val1 <= val2))
+            return Bool((val1 <= val2))
         elif rator.data == "gr":
             val1 = int(rand1.data)
             val2 = int(rand2.data)
-            return Bool(str(val1 > val2))
+            return Bool((val1 > val2))
         elif rator.data == "ge":
             val1 = int(rand1.data)
             val2 = int(rand2.data)
-            return Bool(str(val1 >= val2))
+            return Bool((val1 >= val2))
         elif rator.data == "aug":
             if isinstance(rand2, Tup):
                 rand1.symbols.extend(rand2.symbols)

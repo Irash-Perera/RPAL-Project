@@ -13,4 +13,4 @@ let Find_greatest A B C =
     (A gr B & A gr C) -> A
     | (B gr C) -> B
     | C
-in Print(Find_greatest 0 1 3)
+in Print(Find_greatest 6 7 8)
