@@ -13,20 +13,29 @@ class CSEMachine:
         current_environment = self.environment[0]
         j = 1
         while self.control:
+            self.print_control()
+            self.print_stack()
+            print('\n')
+            # self.print_environment()
             current_symbol = self.control.pop()
             if isinstance(current_symbol, Id):
                 self.stack.insert(0, current_environment.lookup(current_symbol))
+                print(current_environment.lookup(current_symbol).get_data())
             elif isinstance(current_symbol, Lambda):
                 current_symbol.set_environment(current_environment.get_index())
                 self.stack.insert(0, current_symbol)
+                
+                
             elif isinstance(current_symbol, Gamma):
                 next_symbol = self.stack.pop(0)
                 if isinstance(next_symbol, Lambda):
                     # Handle Lambda expression
                     lambda_expr = next_symbol
                     e = E(j)
+                    j += 1
                     if len(lambda_expr.identifiers) == 1:
-                        e.values[lambda_expr.identifiers[0]] = self.stack.pop(0)
+                        temp = self.stack.pop(0)
+                        e.values[lambda_expr.identifiers[0]] = temp
                     else:
                         tup = self.stack.pop(0)
                         for i, id in enumerate(lambda_expr.identifiers):
@@ -160,7 +169,13 @@ class CSEMachine:
                     self.stack.insert(0, self.apply_binary_operation(rator, rand1, rand2))
             elif isinstance(current_symbol, Beta):
                 # Handle Beta expression
-                if bool(self.stack[0].get_data()):
+                # print(self.stack[0].get_data())
+                # self.print_control()
+                # self.print_stack()
+                # # self.control.pop(-2)
+                # self.print_control()
+                
+                if (self.stack[0].get_data() == "True"):
                     self.control.pop()
                 else:
                     self.control.pop(-2)
@@ -227,7 +242,62 @@ class CSEMachine:
             val1 = int(rand1.get_data())
             val2 = int(rand2.get_data())
             return Int(str(val1 + val2))
-        # Implement other binary operations similarly
+        elif rator.data == "-":
+            val1 = int(rand1.data)
+            val2 = int(rand2.data)
+            return Int(str(val1 - val2))
+        elif rator.data == "*":
+            val1 = int(rand1.data)
+            val2 = int(rand2.data)
+            return Int(str(val1 * val2))
+        elif rator.data == "/":
+            val1 = int(rand1.data)
+            val2 = int(rand2.data)
+            return Int(str(val1 / val2))
+        elif rator.data == "**":
+            val1 = int(rand1.data)
+            val2 = int(rand2.data)
+            return Int(str(val1 ** val2))
+        elif rator.data == "&":
+            val1 = bool(rand1.data)
+            val2 = bool(rand2.data)
+            return Bool(str(val1 and val2))
+        elif rator.data == "or":
+            val1 = bool(rand1.data)
+            val2 = bool(rand2.data)
+            return Bool(str(val1 or val2))
+        elif rator.data == "eq":
+            val1 = rand1.data
+            val2 = rand2.data
+            return Bool(str(val1 == val2))
+        elif rator.data == "ne":
+            val1 = rand1.data
+            val2 = rand2.data
+            return Bool(str(val1 != val2))
+        elif rator.data == "ls":
+            val1 = int(rand1.data)
+            val2 = int(rand2.data)
+            return Bool(str(val1 < val2))
+        elif rator.data == "le":
+            val1 = int(rand1.data)
+            val2 = int(rand2.data)
+            return Bool(str(val1 <= val2))
+        elif rator.data == "gr":
+            val1 = int(rand1.data)
+            val2 = int(rand2.data)
+            return Bool(str(val1 > val2))
+        elif rator.data == "ge":
+            val1 = int(rand1.data)
+            val2 = int(rand2.data)
+            return Bool(str(val1 >= val2))
+        elif rator.data == "aug":
+            if isinstance(rand2, Tup):
+                rand1.symbols.extend(rand2.symbols)
+            else:
+                rand1.symbols.append(rand2)
+            return rand1
+        else:
+            return Err()
 
     def get_tuple_value(self, tup):
         # Get the value of a tuple
@@ -244,5 +314,5 @@ class CSEMachine:
         # Get the answer from the CSEMachine
         self.execute()
         if isinstance(self.stack[0], Tup):
-            return str(sum(int(symbol.get_data()) for symbol in self.stack[0].symbols))
+            return self.get_tuple_value(self.stack[0])
         return self.stack[0].get_data()
