@@ -1,0 +1,4 @@
+let Check_odd_even N =
+    N- (N/2)*2 eq 0 -> 'Even'
+    | 'Odd'
+in Print(Check_odd_even 0)

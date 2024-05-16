@@ -1,0 +1,6 @@
+let Factorial N =
+    let rec Factorial_helper Num Acc =
+        Num eq 0 -> Acc
+        | Factorial_helper (Num - 1) (Acc * Num)
+    in Factorial_helper N 1
+in Print(Factorial 0)

@@ -1,0 +1,10 @@
+let rec  Fibonacci_Series(lower, upper, current, previous) = 
+(current + previous) ls lower -> Fibonacci_Series (lower, upper, current + previous, current) |
+    (current + previous) ls upper -> ((Fibonacci_Series (lower, upper, current + previous, current)), print(' '), print(current + previous)) | nil
+in
+let fib_range (start, end) = 
+        start le 1 ->
+            (Fibonacci_Series (start, end, 1, 0), print(' '), print(1), print(' '), print(0)) |
+            Fibonacci_Series (start, end, 1, 0)			
+in
+fib_range (5, 75)
