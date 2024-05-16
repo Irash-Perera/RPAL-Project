@@ -10,7 +10,6 @@ class CSEMachine:
 
     def execute(self):
         # Execute the CSEMachine
-        
         current_environment = self.environment[0]
         j = 1
         while self.control:
@@ -242,57 +241,55 @@ class CSEMachine:
         if rator.get_data() == "+":
             val1 = int(rand1.get_data())
             val2 = int(rand2.get_data())
-            return Int(val1 + val2)
+            return Int(str(val1 + val2))
         elif rator.data == "-":
             val1 = int(rand1.data)
             val2 = int(rand2.data)
-            return Int(val1 - val2)
+            return Int(str(val1 - val2))
         elif rator.data == "*":
             val1 = int(rand1.data)
             val2 = int(rand2.data)
-            return Int(val1 * val2)
+            return Int(str(val1 * val2))
         elif rator.data == "/":
             val1 = int(rand1.data)
             val2 = int(rand2.data)
-            return Int(val1 / val2)
+            return Int(str(val1 / val2))
         elif rator.data == "**":
             val1 = int(rand1.data)
             val2 = int(rand2.data)
-            return Int(val1 ** val2)
+            return Int(str(val1 ** val2))
         elif rator.data == "&":
             val1 = bool(rand1.data)
             val2 = bool(rand2.data)
-            print(val1, val2)
-            print(val1 and val2)
-            return Bool(val1 and val2)
+            return Bool(str(val1 and val2))
         elif rator.data == "or":
             val1 = bool(rand1.data)
             val2 = bool(rand2.data)
-            return Bool(val1 or val2)
+            return Bool(str(val1 or val2))
         elif rator.data == "eq":
             val1 = rand1.data
             val2 = rand2.data
-            return Bool(val1 == val2)
+            return Bool(str(val1 == val2))
         elif rator.data == "ne":
             val1 = rand1.data
             val2 = rand2.data
-            return Bool(val1 != val2)
+            return Bool(str(val1 != val2))
         elif rator.data == "ls":
             val1 = int(rand1.data)
             val2 = int(rand2.data)
-            return Bool(val1 < val2)
+            return Bool(str(val1 < val2))
         elif rator.data == "le":
             val1 = int(rand1.data)
             val2 = int(rand2.data)
-            return Bool(val1 <= val2)
+            return Bool(str(val1 <= val2))
         elif rator.data == "gr":
             val1 = int(rand1.data)
             val2 = int(rand2.data)
-            return Bool(val1 > val2)
+            return Bool(str(val1 > val2))
         elif rator.data == "ge":
             val1 = int(rand1.data)
             val2 = int(rand2.data)
-            return Bool(val1 >= val2)
+            return Bool(str(val1 >= val2))
         elif rator.data == "aug":
             if isinstance(rand2, Tup):
                 rand1.symbols.extend(rand2.symbols)
