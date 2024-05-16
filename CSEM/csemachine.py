@@ -13,9 +13,9 @@ class CSEMachine:
         current_environment = self.environment[0]
         j = 1
         while self.control:
-            # self.print_control()
-            # self.print_stack()
-            # print('\n')
+            self.print_control()
+            self.print_stack()
+            print('\n')
             # self.print_environment()
             current_symbol = self.control.pop()
             if isinstance(current_symbol, Id):
@@ -174,8 +174,7 @@ class CSEMachine:
                 # self.print_stack()
                 # # self.control.pop(-2)
                 # self.print_control()
-                
-                if (bool(self.stack[0].get_data())):
+                if (self.stack[0].get_data() == "true"):
                     self.control.pop()
                 else:
                     self.control.pop(-2)
@@ -227,6 +226,12 @@ class CSEMachine:
                 print(f"e{symbol.get_parent().get_index()}")
             else:
                 print()
+                
+    def covert_string_to_bool(self, data):
+        if data == "true":
+            return True
+        elif data == "false":
+            return False
 
     def apply_unary_operation(self, rator, rand):
         # Apply unary operation
@@ -234,8 +239,8 @@ class CSEMachine:
             val = int(rand.get_data())
             return Int(str(-1 * val))
         elif rator.get_data() == "not":
-            val = bool(rand.get_data())
-            return Bool(str(not val))
+            val = self.covert_string_to_bool(rand.get_data())
+            return Bool(str(not val).lower())
         else:
             return Err()
 
@@ -262,25 +267,26 @@ class CSEMachine:
             val2 = int(rand2.data)
             return Int(str(val1 ** val2))
         elif rator.data == "&":
-            val1 = bool(rand1.data)
-            val2 = bool(rand2.data)
-            return Bool((val1 and val2))
+            print(rand1.data, rand2.data)
+            val1 = self.covert_string_to_bool(rand1.data)
+            val2 = self.covert_string_to_bool(rand2.data)
+            return Bool(str(val1 and val2).lower())
         elif rator.data == "or":
-            val1 = bool(rand1.data)
-            val2 = bool(rand2.data)
-            return Bool((val1 or val2))
+            val1 = self.covert_string_to_bool(rand1.data)
+            val2 = self.covert_string_to_bool(rand2.data)
+            return Bool(str(val1 or val2).lower())
         elif rator.data == "eq":
             val1 = rand1.data
             val2 = rand2.data
-            return Bool((val1 == val2))
+            return Bool(str(val1 == val2).lower())
         elif rator.data == "ne":
             val1 = rand1.data
             val2 = rand2.data
-            return Bool((val1 != val2))
+            return Bool(str(val1 != val2).lower())
         elif rator.data == "ls":
             val1 = int(rand1.data)
             val2 = int(rand2.data)
-            return Bool((val1 < val2))
+            return Bool(str(val1 < val2).lower())
         elif rator.data == "le":
             val1 = int(rand1.data)
             val2 = int(rand2.data)
@@ -288,11 +294,11 @@ class CSEMachine:
         elif rator.data == "gr":
             val1 = int(rand1.data)
             val2 = int(rand2.data)
-            return Bool((val1 > val2))
+            return Bool(str(val1 > val2).lower())
         elif rator.data == "ge":
             val1 = int(rand1.data)
             val2 = int(rand2.data)
-            return Bool((val1 >= val2))
+            return Bool(str(val1 >= val2).lower())
         elif rator.data == "aug":
             if isinstance(rand2, Tup):
                 rand1.symbols.extend(rand2.symbols)
