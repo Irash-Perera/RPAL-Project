@@ -256,7 +256,7 @@ class CSEMachine:
         elif rator.data == "/":
             val1 = int(rand1.data)
             val2 = int(rand2.data)
-            return Int(str(val1 / val2))
+            return Int(str(int(val1 / val2)))
         elif rator.data == "**":
             val1 = int(rand1.data)
             val2 = int(rand2.data)
