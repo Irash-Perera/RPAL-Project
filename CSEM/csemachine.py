@@ -10,9 +10,13 @@ class CSEMachine:
 
     def execute(self):
         # Execute the CSEMachine
+        
         current_environment = self.environment[0]
         j = 1
         while self.control:
+            self.print_control()
+            self.print_stack()
+            self.print_environment()
             current_symbol = self.control.pop()
             if isinstance(current_symbol, Id):
                 self.stack.insert(0, current_environment.lookup(current_symbol))

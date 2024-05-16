@@ -133,7 +133,7 @@ class Parser:
                         if self.tokens:
                             self.tokens.pop(0)  # Remove "."
                             self.E()
-                            self.ast.append(Node(NodeType.lambda_, "lambda", n + 1))
+                            self.ast.append(Node(NodeType.lambda_expr, "lambda", n + 1))
                 else:
                     # print('Entering else block...')
                     self.Ew()
@@ -497,7 +497,7 @@ class Parser:
                 self.tokens.pop(0)
                 self.E()
 
-                self.ast.append(Node(NodeType.fcn_form, "fcn_form", n + 1))
+                self.ast.append(Node(NodeType.fcn_form, "fcn_form", n+1))
             elif self.tokens[1].value == "=":
                 self.ast.append(Node(NodeType.identifier, self.tokens[0].value, 0))
                 # print(tokens[0].value)
