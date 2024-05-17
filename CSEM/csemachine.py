@@ -13,10 +13,11 @@ class CSEMachine:
         current_environment = self.environment[0]
         j = 1
         while self.control:
-            self.print_control()
-            self.print_stack()
-            print('\n')
-            # self.print_environment()
+            
+            # change below paths to your own paths to see how the control and stack are changing
+            # self.write_control_to_file("C:\\Users\\samar\\Desktop\\PL_Project\\CSE Evaluation\\Control.txt")
+            # self.write_stack_to_file("C:\\Users\\samar\\Desktop\\PL_Project\\CSE Evaluation\\Stack.txt")
+            
             current_symbol = self.control.pop()
             if isinstance(current_symbol, Id):
                 self.stack.insert(0, current_environment.lookup(current_symbol))
@@ -200,23 +201,47 @@ class CSEMachine:
 
     
 
-    def print_stack(self):
-        print("Stack: ", end="")
-        for symbol in self.stack:
-            print(symbol.get_data(), end="")
-            if isinstance(symbol, (Lambda, Delta, E, Eta)):
-                print(symbol.get_index(), end="")
-            print(",", end="")
-        print()
+    # def print_stack(self):
+    #     print("Stack: ", end="")
+    #     for symbol in self.stack:
+    #         print(symbol.get_data(), end="")
+    #         if isinstance(symbol, (Lambda, Delta, E, Eta)):
+    #             print(symbol.get_index(), end="")
+    #         print(",", end="")
+    #     print()
     
-    def print_control(self):
-        print("Control: ", end="")
-        for symbol in self.control:
-            print(symbol.get_data(), end="")
-            if isinstance(symbol, (Lambda, Delta, E, Eta)):
-                print(symbol.get_index(), end="")
-            print(",", end="")
-        print()
+    # def print_control(self):
+    #     print("Control: ", end="")
+    #     for symbol in self.control:
+    #         print(symbol.get_data(), end="")
+    #         if isinstance(symbol, (Lambda, Delta, E, Eta)):
+    #             print(symbol.get_index(), end="")
+    #         print(",", end="")
+    #     print()
+    
+    def write_stack_to_file(self, file_path):
+        with open(file_path, 'a') as file:
+            for symbol in self.stack:
+                file.write(symbol.get_data())
+                if isinstance(symbol, (Lambda, Delta, E, Eta)):
+                    file.write(str(symbol.get_index()))
+                file.write(",")
+            file.write("\n")
+
+    def write_control_to_file(self, file_path):
+        with open(file_path, 'a') as file:
+            for symbol in self.control:
+                file.write(symbol.get_data())
+                if isinstance(symbol, (Lambda, Delta, E, Eta)):
+                    file.write(str(symbol.get_index()))
+                file.write(",")
+            file.write("\n")
+    
+    def clear_file(file_path):
+        open(file_path, 'w').close()
+    
+
+
 
     def print_environment(self):
         # Print the environment symbols
