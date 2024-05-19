@@ -292,7 +292,6 @@ class CSEMachine:
             val2 = int(rand2.data)
             return Int(str(val1 ** val2))
         elif rator.data == "&":
-            print(rand1.data, rand2.data)
             val1 = self.covert_string_to_bool(rand1.data)
             val2 = self.covert_string_to_bool(rand2.data)
             return Bool(str(val1 and val2).lower())

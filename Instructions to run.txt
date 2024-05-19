@@ -1,11 +1,22 @@
-This project has 3 major driver files in the root directory. :
+The interpreter can be run by two methods.
+    1. Using Direct Python Commands
+    2. Using Makefile
 
-    1.ast_driver.py - Run this file to generate the AST for the given input file.
-    2.std_ast_driver.py - Run this file to generate the standard AST for the given input file.
-    3.output_driver.py - Run this file to generate the output for the given input file.
+1. Using Direct Python Commands
+    1.1. Open the terminal and navigate to the directory where the interpreter is located.
+    1.2. Run the following commands for output, ast and standardized ast respectively. 
+         python myrpal.py input.txt
+         python myrpal.py input.txt -ast
+         python myrpal.py input.txt -sast
 
-Sample test files are provided in the "Test Files" folder.
-To run these programs, just copy the corresponding test and paste it in the "input.txt" file which is in the root directory.
+    1.3. More inputs can be found in inputs/ directory.
+
+2. Using Makefile
+    2.1. Open the terminal and navigate to the directory where the interpreter is located.
+    2.2. Run the following commands for output, ast and standardized ast respectively. 
+         make run file=input.txt
+         make ast file=input.txt
+         make sast file=input.txt
 
 Just simple as that 😊😁
 
@@ -13,4 +24,4 @@ Just simple as that 😊😁
 📧pererasaim.21@cse.mrt.ac.lk - Irash
 📧ganeshan.21@cse.mrt.ac.lk - Niroshan
 
-Alternatively, to run Makefile (execute via commandline), just go through the instructions in README.md file. 
+For more information, refer README.md

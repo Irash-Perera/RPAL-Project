@@ -1,14 +1,19 @@
-PYTHON := python3
-FILES := ast_driver.py std_ast_driver.py output_driver.py
-PYFILES := $(wildcard *.py)
-ARGS :=
+PYTHON = python3
 
-all: $(PYFILES)
-
+# Default target: runs the RPAL processor with the specified file
 run:
-	./run.sh $(ARGS)
+	$(PYTHON) myrpal.py $(file)
+
+# Target to print the AST
+ast:
+	$(PYTHON) myrpal.py $(file) -ast
+
+# Target to print the standardized AST
+sast:
+	$(PYTHON) myrpal.py $(file) -sast
 
 clean:
 	rm -rf __pycache__ *.pyc
 
-.PHONY: run clean
+# Phony targets to avoid conflicts with files named 'run', 'ast', or 'sast'
+.PHONY: run ast sast
