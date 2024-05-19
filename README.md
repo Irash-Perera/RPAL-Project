@@ -49,30 +49,44 @@ The `Makefile` provides different targets to run the script with different optio
 
 #### Printing Final Output
 To run the RPAL program and print the final output, use the run target. You need to specify the path to the input file using the file variable
-```make run file=path/to/your/input.txt```
+```
+make run file=path/to/your/input.txt
+```
 Example:
-```make run file=inputs/t1.txt```
+```
+make run file=inputs/t1.txt
+```
 
 #### Printing  Abstract Syntax Tree(AST)
 To print only the Abstract Syntax Tree (AST), use the ast target.
-```make ast file=path/to/your/input.txt```
+```
+make ast file=path/to/your/input.txt
+```
 
 #### Printing Standardized Abstract Syntax Tree(SAST)
 To print only the standardized Abstract Syntax Tree (SAST), use the sast target.
-```make sast file=path/to/your/input.txt```
+```
+make sast file=path/to/your/input.txt
+```
 
 ## Usage with Direct Python Commands
 
 You can also run the scripts directly using the python command with the appropriate switches.
 
 #### Printing Final Output
-```python myrpal.py path/to/your/input.txt```
+```
+python myrpal.py path/to/your/input.txt
+```
 
 #### Printing Abstract Syntax Tree(AST)
-```python myrpal.py path/to/your/input.txt -ast```
+```
+python myrpal.py path/to/your/input.txt -ast
+```
 
 #### Printing Standardized Abstract Syntax Tree(SAST)
-```python myrpal.py path/to/your/input.txt -sast```
+```
+python myrpal.py path/to/your/input.txt -sast
+```
 
 ## Cleaning Up
 To remove all `__pycache__` directories and Python cache files in your repository, you can use the `make clean` command.
