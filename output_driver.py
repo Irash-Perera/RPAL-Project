@@ -55,7 +55,7 @@ def main():
         
         cse_machine_factory = CSEMachineFactory()
         cse_machine = cse_machine_factory.get_cse_machine(ast)
-        print('Output of the program: ', cse_machine.get_answer())
+        print(cse_machine.get_answer())
 
 
     except Exception as e:
