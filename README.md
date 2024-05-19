@@ -22,26 +22,72 @@ Before running the scripts, please follow these setup instructions:
 
 2. Install Python (if not already installed). You can download Python from [here](https://www.python.org/downloads/).
 
+3. No additional Python packages are required to install. The project uses only built-in Python libraries.
+
 ## File Structure
+```
+project/
+├── myrpal.py
+├── Makefile
+├── input.txt
+└── inputs/
+    ├── t1.txt
+    └── t2.txt
+    .
+    .
+    .
+    └── t10.txt
+```
+- `myrpal.py`: The main script for processing RPAL files.    
+- `Makefile`: A makefile to simplify running the script with different options.
+- `input.txt`: The input given in the project description.
+- `inputs/`: A directory containing example input files.
 
-The project consists of the following Python scripts:
+## Usage with Makefile
 
-- `ast_driver.py`: This script generates the abstract syntax tree.
-- `std_ast_driver.py`: This script standardizes the abstract syntax tree.
-- `output_driver.py`: This script generates the output.
+The `Makefile` provides different targets to run the script with different options. 
 
-## Running the Scripts
+#### Printing Final Output
+To run the RPAL program and print the final output, use the run target. You need to specify the path to the input file using the file variable
 
-You can simply follow the instructions in "Instructions to run.txt".             
+```make run file=path/to/your/input.txt
+```
+Example:
+```make run file=inputs/t1.txt
+```
+#### Printing  Abstract Syntax Tree(AST)
+To print only the Abstract Syntax Tree (AST), use the ast target.
 
-OR,
+```make ast file=path/to/your/input.txt
+```
+#### Printing Standardized Abstract Syntax Tree(SAST)
+To print only the standardized Abstract Syntax Tree (SAST), use the sast target.
 
-You can run the scripts using the provided Makefile. Here are the available commands:
+```make sast file=path/to/your/input.txt
+```
+## Usage with Direct Python Commands
 
-- `make run`: This command prints the output of the program.
-- `make run ARGS=-ast`: This command prints the abstract syntax tree.
-- `make run ARGS=-std`: This command prints the standardized abstract syntax tree.
+You can also run the scripts directly using the python command with the appropriate switches.
+
+#### Printing Final Output
+```python myrpal.py path/to/your/input.txt
+```
+#### Printing Abstract Syntax Tree(AST)
+```python myrpal.py path/to/your/input.txt --ast
+```
+#### Printing Standardized Abstract Syntax Tree(SAST)
+```python myrpal.py path/to/your/input.txt --sast
+```
 
 ## Cleaning Up
-
 To remove all `__pycache__` directories and Python cache files in your repository, you can use the `make clean` command.
+
+## Troubleshooting
+
+#### Python was not found
+If you encounter an error stating that Python was not found, please ensure that Python is installed on your system and that it is added to your system's PATH environment variable.
+
+If you are using the commannd as `python` try using `python3`. Some Linux distributions use `python3` instead of `python`.
+
+#### File Not Found
+If the input file specified in the command is not found, double-check the path to the file. Ensure that the path is correct and the file exists.
