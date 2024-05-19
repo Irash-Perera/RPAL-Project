@@ -12,5 +12,8 @@ ast:
 sast:
 	$(PYTHON) myrpal.py $(file) -sast
 
+clean:
+	rm -rf __pycache__ *.pyc
+
 # Phony targets to avoid conflicts with files named 'run', 'ast', or 'sast'
 .PHONY: run ast sast

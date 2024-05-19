@@ -73,10 +73,10 @@ You can also run the scripts directly using the python command with the appropri
 ```python myrpal.py path/to/your/input.txt
 ```
 #### Printing Abstract Syntax Tree(AST)
-```python myrpal.py path/to/your/input.txt --ast
+```python myrpal.py path/to/your/input.txt -ast
 ```
 #### Printing Standardized Abstract Syntax Tree(SAST)
-```python myrpal.py path/to/your/input.txt --sast
+```python myrpal.py path/to/your/input.txt -sast
 ```
 
 ## Cleaning Up
