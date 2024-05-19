@@ -46,6 +46,7 @@ def main():
         cse_machine = cse_machine_factory.get_cse_machine(ast)
         
         # Default action: print the final output
+        print("Output of the above program is:")
         print(cse_machine.get_answer())
 
     except Exception as e:
