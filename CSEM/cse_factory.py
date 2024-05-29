@@ -28,9 +28,9 @@ class CSEMachineFactory:
                 return Str(data[9:-2])  # String symbol
             elif data.startswith("<NIL"):
                 return Tup()  # Tuple symbol
-            elif data.startswith("<true>"):
+            elif data.startswith("<TRUE_VALUE:t"):
                 return Bool("true")  # Boolean true symbol
-            elif data.startswith("<false>"):
+            elif data.startswith("<TRUE_VALUE:f"):
                 return Bool("false")  # Boolean false symbol
             elif data.startswith("<dummy>"):
                 return Dummy()  # Dummy symbol
